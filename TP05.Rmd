@@ -1,0 +1,75 @@
+---
+title: "TP05"
+output: html_document
+date: "2025-02-19"
+---
+
+```{r setup, include=FALSE, height = "80%}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercice Extraction
+
+```{r cars}
+cardiaque <- read.csv("DATA/cardiaque.csv")
+sysBM <- cardiaque[cardiaque$BMI >= 23, "systolique"]
+length(sysBM) # taille
+sd(sysBM) # ecart-type corrigé
+mean(sysBM) # moyenne
+quantile(sysBM) # quartiles
+
+```
+
+## Exercice 1
+
+
+```{r pressure, echo=FALSE}
+Esp <- 3
+Ecart <- 1
+N <- 1000
+n <- 50
+
+dataG_v <- rnorm(N*n,mean=Esp,sd=Ecart)
+dataG <- matrix(dataG_v, nrow = N)
+
+est1 <- apply(dataG, MARGIN=1, mean)
+est2 <- apply(dataG, MARGIN=1, function(x)((min(x) + max(x))/2))
+
+moyest1 <- mean(est1)
+moyest2 <- mean(est2)
+moyest1
+moyest2
+
+etest1 <- sd(est1)
+etest2 <- sd(est2)
+etest1
+etest2
+
+
+```
+```{r}
+# Affichage des histogrammes l'un au-dessus de l'autre
+par(mfrow=c(2,1))  # Divise la fenêtre graphique en 2 lignes et 1 colonne
+
+hist(est1, col="skyblue", main="Histogramme de T1 (Moyenne)", xlab="Valeurs de T1", border="black")
+hist(est2, col="lightcoral", main="Histogramme de T2 ((min+max)/2)", xlab="Valeurs de T2", border="black")
+
+```
+## Exercice 2
+
+```{r}
+µ <- 3
+Ecart <- 1
+N <- 1000
+n <- 50
+
+dataG_v <- rnorm(N*n,mean=µ,sd=Ecart)
+dataG <- matrix(dataG_v, nrow = N)
+
+est3 <- apply(dataG, MARGIN = 1, function(x) (sum(x^2) / n - mean(x)^2))  
+est4 <- apply(dataG, MARGIN = 1, var)  
+
+est3
+est4
+```
+
